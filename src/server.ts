@@ -5,7 +5,7 @@ import { container } from "./config/container";
 import { UserService } from "./services/users.service";
 import V1Router from "./routes/v1";
 import healtRouter from "./routes/health.route"
-import { errorMiddleware } from "./middleware/error.middleware";
+import { errorMiddleware } from "./middlewares/error.middleware";
 
 export const createServer = () => {
 
