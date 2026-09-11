@@ -1,11 +1,16 @@
 import express, { Request, Response } from "express";
 import { UserRequestDTO, UserResponseDTO } from "./dto/example.dto";
+import { scopePerRequest } from "awilix-express";
+import { container } from "./config/container";
+import { UserService } from "./services/users.service";
 
 export const createServer = () => {
 
     const app = express();
 
     app.use(express.json());
+
+    app.use(scopePerRequest(container));
 
     app.get("/", (req, res) => {
         res.status(200).json({
@@ -20,7 +25,7 @@ export const createServer = () => {
         })
     });
 
-    app.post("/users", (req, res)=> {
+    app.post("/users", async (req, res)=> {
 
         const request: UserRequestDTO = req.body as UserRequestDTO 
         if (!request.name) {
@@ -29,15 +34,9 @@ export const createServer = () => {
                 message: "name not exist"
             });
         };
-        const response: UserResponseDTO = {
-            id : "1234",
-            name: request.name,
-            lastName: request.lastName,
-            fullName: request.name + " " + request.lastName,
-            age: request.age,
-            status: true
-        }
-        res.status(200).json(response);
+        const serviceUser =  container.resolve<UserService>("userService")
+        const result = await serviceUser.createUser(request);
+        res.status(200).json(result);
 
     }); 
 
