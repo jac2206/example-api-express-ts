@@ -16,4 +16,16 @@ export class UserService implements IUserInterface {
         return response
     }
 
+    async updateUser(user: UserRequestDTO, userId: string): Promise<UserResponseDTO> {
+        const response: UserResponseDTO = {
+            id : userId,
+            name: user.name,
+            lastName: user.lastName,
+            fullName: user.name + " " + user.lastName,
+            age: user.age,
+            status: true
+        };
+        return response
+    }
+    
 }

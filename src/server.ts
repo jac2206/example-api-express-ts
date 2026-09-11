@@ -3,8 +3,12 @@ import { UserRequestDTO, UserResponseDTO } from "./dto/example.dto";
 import { scopePerRequest } from "awilix-express";
 import { container } from "./config/container";
 import { UserService } from "./services/users.service";
+import V1Router from "./routes/v1";
+import healtRouter from "./routes/health.route"
 
 export const createServer = () => {
+
+    const prefix = "/example-api";
 
     const app = express();
 
@@ -12,55 +16,15 @@ export const createServer = () => {
 
     app.use(scopePerRequest(container));
 
-    app.get("/", (req, res) => {
-        res.status(200).json({
-            message: "Server Running"
-        })
+    app.use(`${prefix}/v1`, V1Router);
+    app.use(`${prefix}/health`, healtRouter);
+
+    app.use((req, res) => {
+        res.status(404).json({
+        message: "Route not found",
+        code: 404,
+        });
     });
-
-    app.get("/health",(req, res) => {
-        res.status(200).json({
-            status: true,
-            serviceName: "example-api-back"
-        })
-    });
-
-    app.post("/users", async (req, res)=> {
-
-        const request: UserRequestDTO = req.body as UserRequestDTO 
-        if (!request.name) {
-            return res.status(400).json({
-                code: "BAD_REQUEST",
-                message: "name not exist"
-            });
-        };
-        const serviceUser =  container.resolve<UserService>("userService")
-        const result = await serviceUser.createUser(request);
-        res.status(200).json(result);
-
-    }); 
-
-    app.patch("/users/:id", (req, res)=> {
-
-        const userId: string = req.params.id;
-        const request: UserRequestDTO = req.body as UserRequestDTO 
-        if (!request.name) {
-            return res.status(400).json({
-                code: "BAD_REQUEST",
-                message: "name not exist"
-            });
-        };
-        const response: UserResponseDTO = {
-            id : userId,
-            name: request.name,
-            lastName: request.lastName,
-            fullName: request.name + " " + request.lastName,
-            age: request.age,
-            status: true
-        };
-        res.status(200).json(response);
-
-    }); 
 
     return app
 
