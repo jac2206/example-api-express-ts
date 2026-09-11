@@ -1,11 +1,9 @@
-import express, { Request, Response } from "express";
-import { UserRequestDTO, UserResponseDTO } from "./dto/example.dto";
+import express from "express";
 import { scopePerRequest } from "awilix-express";
 import { container } from "./config/container";
-import { UserService } from "./services/users.service";
 import V1Router from "./routes/v1";
 import healtRouter from "./routes/health.route"
-import { errorMiddleware } from "./middleware/error.middleware";
+import { errorMiddleware } from "./middlewares/error.middleware";
 
 export const createServer = () => {
 

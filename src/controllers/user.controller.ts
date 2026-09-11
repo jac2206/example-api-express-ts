@@ -1,6 +1,8 @@
 import { Request, Response } from "express";
 import { UserRequestDTO, UserResponseDTO } from "../dto/example.dto";
 import { IUserInterface } from "../services/interfaces/users.interface";
+import { AppErros } from "../exceptions/errors/app.error";
+import { AppExeption } from "../exceptions/app.exception";
 
 export class UserController {
     constructor(
@@ -27,11 +29,8 @@ export class UserController {
         const request: UserRequestDTO = req.body as UserRequestDTO;
 
         if (!request.name) {
-            throw {
-                status: 400,
-                code: "BAD_REQUEST",
-                message: "Name is required",
-            };
+           const error = AppErros.NAME_NOT_FOUND
+           throw new AppExeption(error.code, error.message, error.statusCode); 
         }
 
         const result = await this.userService.createUser(request);
@@ -46,11 +45,8 @@ export class UserController {
         const request: UserRequestDTO = req.body as UserRequestDTO;
 
         if (!request.name) {
-            throw {
-                status: 400,
-                code: "BAD_REQUEST",
-                message: "Name is required",
-            };
+           const error = AppErros.NAME_NOT_FOUND
+           throw new AppExeption(error.code, error.message, error.statusCode); 
         }
 
         const result = await this.userService.updateUser(request, userId);
