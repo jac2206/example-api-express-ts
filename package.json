@@ -1,0 +1,26 @@
+{
+  "name": "api-example-backend",
+  "version": "1.0.0",
+  "description": "",
+  "scripts": {
+    "dev": "tsx watch src/main.ts",
+    "build": "tsc",
+    "start": "node dist/main.js",
+    "test": "vitest",
+    "test:run": "vitest run",
+    "test:coverage": "vitest run --coverage"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "type": "commonjs",
+  "dependencies": {
+    "express": "^5.2.1"
+  },
+  "devDependencies": {
+    "@types/express": "^5.0.6",
+    "@types/node": "^22.20.2",
+    "tsx": "^4.23.13",
+    "typescript": "^7.0.2"
+  }
+}
