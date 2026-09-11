@@ -27,12 +27,11 @@ export class UserController {
         const request: UserRequestDTO = req.body as UserRequestDTO;
 
         if (!request.name) {
-            res.status(400).json({
+            throw {
+                status: 400,
                 code: "BAD_REQUEST",
-                message: "name not exist",
-            });
-
-            return;
+                message: "Name is required",
+            };
         }
 
         const result = await this.userService.createUser(request);
@@ -47,12 +46,11 @@ export class UserController {
         const request: UserRequestDTO = req.body as UserRequestDTO;
 
         if (!request.name) {
-            res.status(400).json({
+            throw {
+                status: 400,
                 code: "BAD_REQUEST",
-                message: "name not exist",
-            });
-
-            return;
+                message: "Name is required",
+            };
         }
 
         const result = await this.userService.updateUser(request, userId);

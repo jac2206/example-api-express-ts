@@ -5,6 +5,7 @@ import { container } from "./config/container";
 import { UserService } from "./services/users.service";
 import V1Router from "./routes/v1";
 import healtRouter from "./routes/health.route"
+import { errorMiddleware } from "./middleware/error.middleware";
 
 export const createServer = () => {
 
@@ -25,6 +26,8 @@ export const createServer = () => {
         code: 404,
         });
     });
+
+    app.use(errorMiddleware);
 
     return app
 
