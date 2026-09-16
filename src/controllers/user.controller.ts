@@ -1,8 +1,6 @@
 import { Request, Response } from "express";
 import { UserRequestDTO, UserResponseDTO } from "../dto/example.dto";
 import { IUserInterface } from "../services/interfaces/users.interface";
-import { AppErros } from "../exceptions/errors/app.error";
-import { AppExeption } from "../exceptions/app.exception";
 
 export class UserController {
     constructor(
@@ -27,12 +25,6 @@ export class UserController {
         res: Response,
     ): Promise<void> => {
         const request: UserRequestDTO = req.body as UserRequestDTO;
-
-        if (!request.name) {
-           const error = AppErros.NAME_NOT_FOUND
-           throw new AppExeption(error.code, error.message, error.statusCode); 
-        }
-
         const result = await this.userService.createUser(request);
         res.status(200).json(result);
     };
@@ -43,12 +35,6 @@ export class UserController {
     ): Promise<void> => {
         const userId: string = req.params.id as string;
         const request: UserRequestDTO = req.body as UserRequestDTO;
-
-        if (!request.name) {
-           const error = AppErros.NAME_NOT_FOUND
-           throw new AppExeption(error.code, error.message, error.statusCode); 
-        }
-
         const result = await this.userService.updateUser(request, userId);
         res.status(200).json(result);
     }; 
