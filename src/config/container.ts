@@ -1,7 +1,9 @@
 import { createContainer, asClass, InjectionMode } from "awilix";
 import { UserService } from "../services/users.service";
-import { UserController } from "../controllers/user.controller";
+import { UsersController } from "../controllers/users.controller";
 import { HealthController } from "../controllers/health.controller";
+import { TransactionsController } from "../controllers/transactions.controller";
+import { TransactionsService } from "../services/transactions.service";
 
 export const container = createContainer({
   injectionMode: InjectionMode.CLASSIC,
@@ -9,10 +11,12 @@ export const container = createContainer({
 
 container.register({
   //controllers
-  UserController: asClass(UserController).scoped(),
+  usersController: asClass(UsersController).scoped(),
   healthController: asClass(HealthController).scoped(),
+  transactionsController: asClass(TransactionsController).scoped(),
 
   //services
-  userService: asClass(UserService).scoped()
+  userService: asClass(UserService).scoped(),
+  transactionsService: asClass(TransactionsService).scoped()
     
 })

@@ -2,7 +2,7 @@ import { Request, Response } from "express";
 import { UserRequestDTO, UserResponseDTO } from "../dto/example.dto";
 import { IUserInterface } from "../services/interfaces/users.interface";
 
-export class UserController {
+export class UsersController {
     constructor(
         readonly userService: IUserInterface
     ) {}
