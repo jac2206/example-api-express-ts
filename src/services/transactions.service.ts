@@ -73,13 +73,13 @@ export class TransactionsService implements ITransactionsService{
 
     async createPaymentTransaction( transaction: TransactionsRequestDTO): Promise<TransactionsResponseDTO | ErrorResponseDTO> {
 
-        if (Number.isNaN(transaction.amount)) {
-            const error: ErrorResponseDTO = {
-                code: "INVALID_ID",
-                message: "The amount id must be a number"
-            } 
-            return error;
+        if (typeof transaction.amount !== "number") {
+            return {
+            code: "INVALID_AMOUNT",
+            message: "The amount must be a number",
+            };
         }
+
 
         const lastTransaction = transactionData[transactionData.length - 1];
         const newId = lastTransaction.id + 1;

@@ -95,7 +95,7 @@ export const createServer = () => {
         const serviceTransaction = container.resolve<TransactionsService>("transactionsService")
         const result = await serviceTransaction.createPaymentTransaction(request);
         if ("code" in result) {
-            res.status(4).json(result);
+            res.status(422).json(result);
         }
         res.status(200).json(result);
     });
