@@ -780,9 +780,11 @@ Para varias variables:
 docker run -d \
   --name api-example-back \
   -p 3000:3000 \
-  -e NODE_ENV=production \
-  -e DATABASE_URL="postgresql://user:password@host:5432/database" \
-  -e API_KEY="my-secret-key" \
+  -e NODE_ENV=development \
+  -e PORT=3000 \
+  -e SHOW_ENV=true \
+  -e LOG_LEVEL=info \
+  -e HTTP_TIME_OUT=20000 \
   api-example-back
 ```
 
