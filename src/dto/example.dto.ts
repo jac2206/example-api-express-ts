@@ -8,7 +8,12 @@ export interface UserResponseDTO {
     id: string,
     name: string,
     lastName: string,
-    fullName: string
-    age: number
+    fullName: string,
+    age: number,
     status: boolean
+}
+
+export interface ErrorResponseDTO {
+    code: string,
+    message: string
 }

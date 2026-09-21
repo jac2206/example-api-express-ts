@@ -1,5 +1,6 @@
 import { createContainer, asClass, InjectionMode } from "awilix";
 import { UserService } from "../services/users.service";
+import { TransactionsService } from "../services/transactions.service";
 
 export const container = createContainer({
   injectionMode: InjectionMode.CLASSIC,
@@ -7,6 +8,7 @@ export const container = createContainer({
 
 container.register({
 
-  userService: asClass(UserService).scoped()
+  userService: asClass(UserService).scoped(),
+  transactionsService: asClass(TransactionsService).scoped()
     
 })
