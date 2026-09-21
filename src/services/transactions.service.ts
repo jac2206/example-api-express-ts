@@ -6,6 +6,7 @@ import {
 } from "../dto/transactions.dto";
 import { AppExeption } from "../exceptions/app.exception";
 import { AppErros } from "../exceptions/errors/app.error";
+import { ITransactionsRepository } from "../repositories/interfaces/transactions.interface";
 import {
   ITransactionsService,
   TransactionsFilters,
@@ -23,38 +24,22 @@ export enum TransactionStatus {
 }
 
 export class TransactionsService implements ITransactionsService {
-  constructor() {}
+  constructor(
+    readonly transactionsRepository: ITransactionsRepository
+  ) {}
 
   async getTransactions(
     filters?: TransactionsFilters,
   ): Promise<TransactionsResponseDTO[]> {
-    let transactions = transactionData;
-
-    if (filters?.status) {
-      transactions = transactions.filter(
-        (transaction) => transaction.status === filters.status,
-      );
-    }
-
-    if (filters?.typePayment) {
-      transactions = transactions.filter(
-        (transaction) => transaction.typePayment === filters.typePayment,
-      );
-    }
-
-    if (filters?.sort === "accumulate") {
-      transactions = [...transactions].sort(
-        (a, b) => b.accumulate - a.accumulate,
-      );
-    }
-
-    return transactions.map((transaction) => ({
-      id: transaction.id,
-      amount: transaction.amount,
-      accumulate: transaction.accumulate,
-      typePayment: transaction.typePayment,
-      status: transaction.status,
-    }));
+    const transactionsFilters = await this.transactionsRepository.getTransactionsXFilters(filters) 
+    const result: TransactionsResponseDTO[] = transactionsFilters.map(((transaction) => ({
+        id: transaction.id,
+        amount: transaction.amount,
+        accumulate: transaction.accumulate,
+        typePayment: transaction.typePayment,
+        status: transaction.status,
+        })))
+    return result
   }
 
   async getTransactionXId(
