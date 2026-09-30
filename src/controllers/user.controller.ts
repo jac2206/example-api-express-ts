@@ -25,15 +25,6 @@ export class UserController {
         res: Response,
     ): Promise<void> => {
         const request: UserRequestDTO = req.body as UserRequestDTO;
-
-        if (!request.name) {
-            throw {
-                status: 400,
-                code: "BAD_REQUEST",
-                message: "Name is required",
-            };
-        }
-
         const result = await this.userService.createUser(request);
         res.status(200).json(result);
     };
@@ -44,15 +35,6 @@ export class UserController {
     ): Promise<void> => {
         const userId: string = req.params.id as string;
         const request: UserRequestDTO = req.body as UserRequestDTO;
-
-        if (!request.name) {
-            throw {
-                status: 400,
-                code: "BAD_REQUEST",
-                message: "Name is required",
-            };
-        }
-
         const result = await this.userService.updateUser(request, userId);
         res.status(200).json(result);
     }; 
